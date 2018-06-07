@@ -1,10 +1,16 @@
 package tmmdl.util;
 
+import tmmdl.collector.Collector;
+import tmmdl.parser.Parser;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,5 +65,16 @@ public class Converter {
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 
         return sqlDate;
+    }
+
+    public void scheduleIt() {
+
+        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        scheduler.scheduleAtFixedRate(new Runnable() {
+            public void run() {
+                Collector collector = new Collector();
+                collector.run();
+            }
+        }, 0, 12, TimeUnit.HOURS);
     }
 }

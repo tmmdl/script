@@ -14,6 +14,8 @@ public class Collector {
 
     public void run() {
 
+        System.out.println("run");
+
         Parser parser = new Parser();
         parser.indeed(jobs);
         parser.monster(jobs);
@@ -21,6 +23,7 @@ public class Collector {
 
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
+        System.out.println("session open");
         session.beginTransaction();
 
         for (int i = 0; i < jobs.size(); i++) {
@@ -30,5 +33,6 @@ public class Collector {
         }
         session.getTransaction().commit();
         session.close();
+        System.out.println("session closed");
     }
 }

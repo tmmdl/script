@@ -27,7 +27,7 @@ public class Parser {
 
     public void indeed(ArrayList list) {
 
-        for (int i = 0; i < 110; i+=10) {
+        for (int i = 0; i < 31; i+=10) {
             url = "https://de.indeed.com/jobs?q=Junior+Softwareentwickler&sort=date&start=()".replace("()", ""+i);
             try {
                 Document document = Jsoup.connect(url)
@@ -35,6 +35,7 @@ public class Parser {
                         .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0")
                         .referrer("http://www.google.com")
                         .get();
+                System.out.println("connected");
                 for (Element element: document.select(".row")) {
                     id = element.select("a[href]").attr("href");
                     title = element.select(".jobTitle").text();
@@ -51,6 +52,7 @@ public class Parser {
                     Job job = new Job(id, title, location, company, created, link, " ");
                     list.add(job);
                 }
+                System.out.println("indeed. page " + i);
                 try {
                     Thread.sleep(5000);
                 }
@@ -65,7 +67,7 @@ public class Parser {
 
     public void monster(ArrayList list) {
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 2; i++) {
             url = "https://www.monster.de/jobs/suche/?cy=de&q=junior&kwdv=13765,14644&page=()".replace("()", "+i");
             try {
                 Document document = Jsoup.connect(url)
@@ -88,6 +90,7 @@ public class Parser {
                     Job job = new Job(id, title, location, company, created, link, " ");
                     list.add(job);
                 }
+                System.out.println("monster. page " + i);
                 try {
                     Thread.sleep(5000);
                 }
@@ -102,7 +105,7 @@ public class Parser {
 
     public void glassdoor(ArrayList list) {
 
-        for (int i = 1; i < 15; i++) {
+        for (int i = 1; i < 4; i++) {
 
             url = "https://www.glassdoor.de/Job/deutschland-junior-java-jobs-SRCH_IL.0,11_IN96_KO12,23_IP().htm?fromAge=30".replace("()", "" + i);
             try {
@@ -128,6 +131,7 @@ public class Parser {
                     Job job = new Job(id, title, location, company, created, link, " ");
                     list.add(job);
                 }
+                System.out.println("glassdoor. page " + i);
                 try {
                     Thread.sleep(5000);
                 } catch (Exception e) {
